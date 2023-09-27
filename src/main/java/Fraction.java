@@ -15,7 +15,11 @@ public class Fraction {//分数
         denominator=Math.abs(denominator);
 
         int c=gcd(numerator,denominator);//最简分数
-        this.numerator=numerator/c;
+        if(this.isNegative==true){
+            this.numerator=-numerator/c;
+        }else{
+            this.numerator=numerator/c;
+        }
         this.denominator=denominator/c;
 
     }
@@ -54,11 +58,15 @@ public class Fraction {//分数
 
     }
     public Fraction add(Fraction fraction){
-        return new Fraction(this.numerator*fraction.denominator+this.denominator*fraction.numerator,this.denominator*fraction.denominator);
+        return new Fraction(this.numerator*fraction.denominator+this.denominator*fraction.numerator,
+                this.denominator*fraction.denominator);
+
     }
 
     public Fraction sub(Fraction fraction){
-        return new Fraction(this.numerator*fraction.denominator-this.denominator*fraction.numerator,this.denominator*fraction.denominator);
+        return new Fraction(this.numerator*fraction.denominator-this.denominator*fraction.numerator,
+                this.denominator*fraction.denominator);
+
     }
 
     public Fraction mul(Fraction fraction){
@@ -70,27 +78,16 @@ public class Fraction {//分数
     }
 
     public String toString() {
-        if(isNegative==true){
-            if(denominator==1) {
-                return "-"+String.valueOf(numerator);
-            }else
-            if(numerator>denominator) {
-                return "-"+String.format("%d'%d/%d", numerator/denominator,numerator%denominator,denominator);
-            }else {
-                return "-"+String.format("%d/%d", numerator,denominator);
-            }
-        }else{
             if(denominator==1) {
                 return String.valueOf(numerator);
-            }else
-            if(numerator>denominator) {
+            }else if(this.isNegative==true&&Math.abs(numerator)>denominator) {
+                return String.format("-%d'%d/%d", Math.abs(numerator)/denominator,Math.abs(numerator)%denominator,denominator);
+            }else if(this.isNegative==false&&numerator>denominator) {
                 return String.format("%d'%d/%d", numerator/denominator,numerator%denominator,denominator);
-            }else {
+            }
+            else {
                 return String.format("%d/%d", numerator,denominator);
             }
-        }
 
     }
-
-
 }
